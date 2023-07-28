@@ -1,9 +1,8 @@
 # flutter_calculator
 A simple calculator app inspired from OnePlus calculator app made using flutter
-![Screenshot_1690556982](https://github.com/rrstudios10/flutter_calculator/assets/70618833/f2d60b95-b12e-4fa5-b86e-74fbb20c0461)
-![Screenshot_1690556792](https://github.com/rrstudios10/flutter_calculator/assets/70618833/1d85ca69-04ca-4675-8899-f8dc3880ae2c)
-![Screenshot_1690557218](https://github.com/rrstudios10/flutter_calculator/assets/70618833/577c835a-0338-4539-9c4a-a8f0c2926097)
-![Screenshot_1690557244](https://github.com/rrstudios10/flutter_calculator/assets/70618833/4de7ad4a-b4a3-4ff2-951d-be0ddbcbc63b)
+Calculator Light Theme | Calculator Dark Theme | History Light Theme | History Dark Theme
+:-------------------------:|:-------------------------:|:-------------------------:|:-------------------------:|
+![Screenshot_1690556982](https://github.com/rrstudios10/flutter_calculator/assets/70618833/f2d60b95-b12e-4fa5-b86e-74fbb20c0461) | ![Screenshot_1690556792](https://github.com/rrstudios10/flutter_calculator/assets/70618833/1d85ca69-04ca-4675-8899-f8dc3880ae2c)| ![Screenshot_1690557218](https://github.com/rrstudios10/flutter_calculator/assets/70618833/577c835a-0338-4539-9c4a-a8f0c2926097) | ![Screenshot_1690557244](https://github.com/rrstudios10/flutter_calculator/assets/70618833/4de7ad4a-b4a3-4ff2-951d-be0ddbcbc63b)
 
 
 ## UI/UX
