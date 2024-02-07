@@ -44,7 +44,8 @@ class Evaluator:
                 self.operatorStack.pop()
 
                 if len(self.operatorStack) > 0 and self.operatorStack[-1] == isSci:
-                    self._calculateSci(isSci)
+                    ans = self._calculate()
+                    self.numStack.append(ans)
                     isSci = None
             elif self._isOperator(c):
                 if c == '-' and (sawOperator or len(self.operatorStack) == 0):
@@ -72,7 +73,7 @@ class Evaluator:
     def _isOperator(self, c):
         return c == '+' or c == '-' or c == '/' or c == '*' or c == '^'
 
-    def isScientific(self, i):
+    def isScientific(self, i: int):
         if self.expr[i: i + 3] == "sin":
             return "sin"
         elif self.expr[i: i + 3] == "cos":
@@ -85,6 +86,9 @@ class Evaluator:
             return "ln"
         return None
 
+    def isScentific(self, s: str):
+        return s == "sin" or s == "cos" or s == "tan" or s == "log" or s == "ln"
+
     def _precedence(self, op):
         if (op == '+') or (op == '-'):
             return 1
@@ -95,34 +99,39 @@ class Evaluator:
         return -1
 
     def _calculate(self):
-        a = self.numStack.pop()
-        b = self.numStack.pop()
         operator = self.operatorStack.pop()
-        if operator == '+':
-            return a + b
-        elif operator == '-':
-            return b - a  # not a - b since evaluation is done from left to
-        elif operator == '^':
-            return int(b ** a)
-        if operator == '*':
-            return a * b
-        elif operator == '/':
-            if a == 0:
-                raise Exception("Cannot divide by zero")
-            return b / float(a)
-        return 0
+        if self.isScentific(operator):
+            return self._calculateSci(operator)
+        else:
+            a = self.numStack.pop()
+            b = self.numStack.pop()
+
+            if operator == '+':
+                return a + b
+            elif operator == '-':
+                return b - a  # not a - b since evaluation is done from left to
+            elif operator == '^':
+                return int(b ** a)
+            if operator == '*':
+                return a * b
+            elif operator == '/':
+                if a == 0:
+                    raise Exception("Cannot divide by zero")
+                return b / float(a)
+            return 0
 
     def _calculateSci(self, isSci):
         x = self.numStack.pop()
-        self.operatorStack.pop()
+        ans = 0
         match isSci:
             case "sin":
-                self.numStack.append(math.sin(x))
+                ans = math.sin(x)
             case "cos":
-                self.numStack.append(math.cos(x))
+                ans = math.cos(x)
             case "tan":
-                self.numStack.append(math.tan(x))
+                ans = math.tan(x)
             case "log":
-                self.numStack.append(math.log10(x))
+                ans = math.log10(x)
             case "ln":
-                self.numStack.append(math.log(x))
+                ans = math.log(x)
+        return ans
