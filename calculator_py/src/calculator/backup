@@ -1,0 +1,68 @@
+
+
+# numStack = []
+# operatorStack = []
+#
+#
+# def evaluate(expr: str):
+#     sawDecimal = False
+#     sawOperator = False
+#
+#     i = 0
+#     while i < len(expr):
+#         c = expr[i]
+#         if _isOperator(c):
+#             sawOperator = True
+#             while len(operatorStack) > 0 and _precedence(c) <= _precedence(operatorStack[len(operatorStack) - 1]):
+#                 ans = _calculate()
+#                 numStack.append(ans)
+#             operatorStack.append(c)
+#         elif c.isdigit():
+#             sawOperator = False
+#             num = 0.0
+#             while i < len(expr) and expr[i].isdigit():
+#                 num = num * 10 + int(expr[i])  # (expr[i] - '0')
+#                 i += 1
+#             i -= 1
+#             numStack.append(num)
+#         i += 1
+#     while len(operatorStack) > 0:  # .isEmpty():
+#         ans = _calculate()
+#         numStack.append(ans)
+#     return numStack.pop()
+#
+#
+# def _isOperator(c):
+#     return c == '+' or c == '-' or c == '/' or c == '*' or c == '^'
+#
+#
+# def _precedence(op):
+#     if (op == '+') or (op == '-'):
+#         return 1
+#     elif (op == '*') or (op == '/'):
+#         return 2
+#     elif op == '^':
+#         return 3
+#     return -1
+#
+#
+# def _calculate():
+#     a = numStack.pop()
+#     b = numStack.pop()
+#     operator = operatorStack.pop()
+#     if operator == '+':
+#         return a + b
+#     elif operator == '-':
+#         return b - a  # not a - b since evaluation is done from left to
+#     elif operator == '^':
+#         return int(b ** a)
+#     if operator == '*':
+#         return a * b
+#     elif operator == '/':
+#         if a == 0:
+#             raise Exception("Cannot divide by zero")
+#         return round(b / float(a))
+#     return 0
+#
+#
+# print(evaluate(expression))

@@ -32,10 +32,9 @@ class Evaluator:
                             num = num * 10.0 + int(self.expr[i])  # (expr[i] - '0')
                     i += 1
                 i -= 1
-                self.numStack.append(num * (-1 if negateNext else 1))
+                self.numStack.append(num)
                 sawDecimal = False
             elif c == '(':
-                # TODO: Add negateNext logic here
                 self.operatorStack.append(c)
             elif c == ')':
                 while self.operatorStack[-1] != '(':
@@ -48,11 +47,25 @@ class Evaluator:
                     self.numStack.append(ans)
                     isSci = None
             elif self._isOperator(c):
-                if c == '-' and (sawOperator or len(self.operatorStack) == 0):
-                    negateNext = True
+                # if c == '-' and (sawOperator or len(self.numStack) == 0):  # or len(self.operatorStack) == 0):
+                #     negateNext = True
+                # else:
+                sawOperator = True
+                if c == '-':
+                    if len(self.operatorStack) == 0 or self.operatorStack[-1] == '*_':
+                        while len(self.operatorStack) > 0 and self._precedence('+') <= self._precedence(
+                                self.operatorStack[-1]):
+                            ans = self._calculate()
+                            self.numStack.append(ans)
+                        self.operatorStack.append('+')
+                    # self.operatorStack.append('*_')
+                    self.numStack.append(-1)
+                    while len(self.operatorStack) > 0 and self._precedence('*_') <= self._precedence(
+                            self.operatorStack[-1]):
+                        ans = self._calculate()
+                        self.numStack.append(ans)
+                    self.operatorStack.append('*_')
                 else:
-                    negateNext = False
-                    sawOperator = True
                     while len(self.operatorStack) > 0 and self._precedence(c) <= self._precedence(
                             self.operatorStack[-1]):
                         ans = self._calculate()
@@ -96,6 +109,8 @@ class Evaluator:
             return 2
         elif op == '^':
             return 3
+        elif op == '*_':
+            return 4
         return -1
 
     def _calculate(self):
@@ -104,15 +119,18 @@ class Evaluator:
             return self._calculateSci(operator)
         else:
             a = self.numStack.pop()
+            # print(a)
+            if len(self.numStack) == 0:
+                return a
             b = self.numStack.pop()
-
+            # print(b)
             if operator == '+':
                 return a + b
             elif operator == '-':
-                return b - a  # not a - b since evaluation is done from left to
+                return b - a  # not a - b
             elif operator == '^':
                 return int(b ** a)
-            if operator == '*':
+            elif operator == '*' or operator == '*_':
                 return a * b
             elif operator == '/':
                 if a == 0:
